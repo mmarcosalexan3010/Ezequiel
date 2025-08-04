@@ -5,4 +5,5 @@
     <color name="blue">#FF3F51B5</color>
     <color name="red">#FFFF0000</color>
     <color name="my_custom_green">#FF00FF00</color>
+    <color name="verde_floresta_escuro">#FF006400</color>
 </resources>
