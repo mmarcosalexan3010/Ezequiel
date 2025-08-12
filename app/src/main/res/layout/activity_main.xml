@@ -11,15 +11,19 @@
         android:id="@+id/headerContainer"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:background="@color/white"
         android:padding="16dp"
+        android:background="@drawable/rounded_corner_background"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="17dp"
+            android:layout_height="48dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Voltar"/>
 
         <TextView
             android:id="@+id/textLogin"
@@ -40,7 +44,7 @@
     <EditText
         android:id="@+id/editEmail"
         android:layout_width="320dp"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:hint="Email"
         android:textColorHint="@color/white"
         android:background="@drawable/edittext_border"
@@ -70,10 +74,8 @@
             android:id="@+id/editSenha"
             android:layout_width="match_parent"
             android:background="@drawable/edittext_border"
-            android:layout_height="45dp"
-            android:inputType="textPassword" />
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

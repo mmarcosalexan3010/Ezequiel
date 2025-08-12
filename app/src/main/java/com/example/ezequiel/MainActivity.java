@@ -1,68 +1,85 @@
-package com.example.ezequiel; // Certifique-se que o package é o correto para o seu projeto
+package com.example.ezequiel; // Certifique-se que o package é o correto
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText; // Para o EditText de email
+import android.widget.EditText;
+import android.widget.FrameLayout; // Importe FrameLayout
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat; // Para ContextCompat.getColor
 
-import com.google.android.material.textfield.TextInputEditText; // Para o TextInputEditText de senha
+import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Declarar as Views
     private EditText editEmail;
-    private TextInputEditText textInputLayoutSenha; // Se estiver usando TextInputEditText para senha
-    // Se o campo de senha for um EditText normal, use: private EditText editTextSenha;
+    private TextInputEditText textInputLayoutSenha;
     private Button botaoLogin;
+    private FrameLayout headerContainer; // Declare o FrameLayout
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // EdgeToEdge.enable(this); // Você pode manter ou remover isso dependendo se está usando EdgeToEdge
         setContentView(R.layout.activity_main); // Certifique-se que o nome do seu layout XML está correto
 
-        // Inicializar as Views (conectar com os IDs do XML)
+        // Inicializar as Views
         editEmail = findViewById(R.id.editEmail);
         textInputLayoutSenha = findViewById(R.id.editSenha);
-        // Se o campo de senha for um EditText normal, use: editTextSenha = findViewById(R.id.editSenha);
         botaoLogin = findViewById(R.id.botaoLogin);
+        headerContainer = findViewById(R.id.headerContainer); // Obtenha a referência do FrameLayout
 
-        // Configurar o OnClickListener para o botão de login
+        // Configurar o fundo arredondado para o headerContainer
+        if (headerContainer != null) {
+            setBottomLeftRoundedCorner(headerContainer, R.color.white, 20); // 20dp de raio
+        }
+
         botaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obter o texto dos campos quando o botão for clicado
                 String email = editEmail.getText().toString().trim();
                 String senha = textInputLayoutSenha.getText().toString().trim();
-                // Se o campo de senha for um EditText normal, use: String senha = editTextSenha.getText().toString().trim();
 
-                // Lógica simples de "login" (apenas para demonstração)
                 if (email.isEmpty() || senha.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Exibir os dados em um Toast (substitua por sua lógica de login real)
                     String mensagemLogin = "Email: " + email + "\nSenha: " + senha;
                     Toast.makeText(MainActivity.this, mensagemLogin, Toast.LENGTH_LONG).show();
-
-                    // Aqui você adicionaria a lógica para validar o login,
-                    // verificar com um servidor, navegar para outra Activity, etc.
                 }
             }
         });
+    }
 
-        /*
-        // Se você estiver usando ViewBinding (recomendado para projetos maiores para evitar findViewById)
-        // ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
-        // setContentView(binding.getRoot());
-        //
-        // editTextEmail = binding.editEmail;
-        // textInputEditTextSenha = binding.editSenha;
-        // buttonLogin = binding.botaoLogin;
-        //
-        // buttonLogin.setOnClickListener(v -> { ... });
-        */
+    /**
+     * Define um fundo para a View com apenas o canto inferior esquerdo arredondado.
+     * @param view A View à qual o fundo será aplicado.
+     * @param backgroundColorResId O ID do recurso da cor de fundo (ex: R.color.white).
+     * @param cornerRadiusDp O raio do canto em DP.
+     */
+    private void setBottomLeftRoundedCorner(View view, int backgroundColorResId, float cornerRadiusDp) {
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+
+        // Define a cor de fundo
+        gradientDrawable.setColor(ContextCompat.getColor(this, backgroundColorResId));
+
+        // Converte o raio de DP para pixels
+        float cornerRadiusPx = cornerRadiusDp * getResources().getDisplayMetrics().density;
+
+        // Define os raios para cada canto:
+        // {topLeftX, topLeftY, topRightX, topRightY, bottomRightX, bottomRightY, bottomLeftX, bottomLeftY}
+        // Cada par (X, Y) define o raio para aquele canto.
+        // Para um canto reto, o raio é 0.
+        float[] radii = new float[]{
+                0, 0, // Canto superior esquerdo
+                0, 0, // Canto superior direito
+                0, 0, // Canto inferior direito
+                cornerRadiusPx, cornerRadiusPx  // Canto inferior esquerdo
+        };
+        gradientDrawable.setCornerRadii(radii);
+
+        view.setBackground(gradientDrawable);
     }
 }
